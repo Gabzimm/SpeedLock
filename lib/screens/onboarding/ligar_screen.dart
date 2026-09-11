@@ -5,7 +5,6 @@ import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:usb_serial/usb_serial.dart';
 
 import '../../app/theme.dart';
 import '../../services/api_client.dart';
