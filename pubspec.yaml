@@ -36,7 +36,9 @@ dependencies:
   # Bluetooth
   flutter_reactive_ble: ^5.3.1
   permission_handler: ^11.3.1
-  usb_serial: ^0.5.1
+  # usb_serial removido — pacote desatualizado, quebra a compilação
+  # Android atual (chama `jcenter()`, que já não existe). Ver aviso em
+  # lib/services/ble/protocols/usb_transport.dart.
 
   # Tipografia (Space Grotesk + Manrope, sem empacotar .ttf à mão)
   google_fonts: ^6.2.1
