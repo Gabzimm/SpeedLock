@@ -30,7 +30,7 @@ workflows:
             echo 'subprojects {' >> $F
             echo '    afterEvaluate {' >> $F
             echo '        if (project.hasProperty("android")) {' >> $F
-            echo '            val androidExt = project.property("android")' >> $F
+            echo '            val androidExt = project.property("android")!!' >> $F
             echo '            try {' >> $F
             echo '                val m = androidExt.javaClass.getMethod("compileSdkVersion", Int::class.javaPrimitiveType)' >> $F
             echo '                m.invoke(androidExt, 36)' >> $F
