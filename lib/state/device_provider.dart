@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/ble/protocols/scooter_protocol.dart';
 import '../services/device_command_service.dart';
+import 'connection_provider.dart';
 
 /// Mirrors exactly the fields the Controlo screen mockup needs:
 /// current speed, speed limit, lock state, lights, battery and mode.
