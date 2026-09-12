@@ -10,13 +10,17 @@ workflows:
         script: flutter create . --project-name speedlock --org com.speedlock
       - name: Subir versão do Android SDK (33 é baixa demais para o Bluetooth)
         script: |
-          # Tenta os dois formatos possíveis do ficheiro (Kotlin DSL ou Groovy),
-          # conforme a versão do Flutter usada gera um ou outro.
-          sed -i '' 's/compileSdk = flutter.compileSdkVersion/compileSdk = 36/' android/app/build.gradle.kts 2>/dev/null || true
-          sed -i '' 's/compileSdk flutter.compileSdkVersion/compileSdk 36/' android/app/build.gradle 2>/dev/null || true
-          sed -i '' 's/targetSdk = flutter.targetSdkVersion/targetSdk = 36/' android/app/build.gradle.kts 2>/dev/null || true
-          sed -i '' 's/targetSdk flutter.targetSdkVersion/targetSdk 36/' android/app/build.gradle 2>/dev/null || true
-          grep -H "compileSdk\|targetSdk" android/app/build.gradle.kts android/app/build.gradle 2>/dev/null || true
+          echo "--- ficheiro antes ---"
+          cat android/app/build.gradle.kts 2>/dev/null || cat android/app/build.gradle 2>/dev/null
+          # Troca a linha inteira de compileSdk/targetSdk por "= 36", seja
+          # qual for o texto exato que lá estiver (mais robusto do que
+          # tentar adivinhar a expressão certa à primeira).
+          sed -E -i '' 's/^([[:space:]]*)compileSdk(Version)?[[:space:]]*=?.*$/\1compileSdk = 36/' android/app/build.gradle.kts 2>/dev/null || true
+          sed -E -i '' 's/^([[:space:]]*)targetSdk(Version)?[[:space:]]*=?.*$/\1targetSdk = 36/' android/app/build.gradle.kts 2>/dev/null || true
+          sed -E -i '' 's/^([[:space:]]*)compileSdk(Version)?[[:space:]]+.*$/\1compileSdk 36/' android/app/build.gradle 2>/dev/null || true
+          sed -E -i '' 's/^([[:space:]]*)targetSdk(Version)?[[:space:]]+.*$/\1targetSdk 36/' android/app/build.gradle 2>/dev/null || true
+          echo "--- ficheiro depois ---"
+          cat android/app/build.gradle.kts 2>/dev/null || cat android/app/build.gradle 2>/dev/null
       - name: Instalar dependências
         script: flutter pub get
       - name: Gerar ícone da app a partir do logótipo real
