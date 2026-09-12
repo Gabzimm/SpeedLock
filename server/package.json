@@ -1,0 +1,25 @@
+{
+  "name": "speedlock-server",
+  "description": "Backend do SpeedLock — Express, organizado em camadas (routes/services/repositories), pronto para escala: rate limiting em memória, validação consistente, logs estruturados.",
+  "version": "2.0.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "firebase-admin": "^12.0.0",
+    "geoip-lite": "^1.4.10",
+    "helmet": "^7.1.0",
+    "nodemailer": "^6.9.0",
+    "pino": "^9.4.0",
+    "pino-roll": "^4.0.0",
+    "zod": "^3.23.8"
+  }
+}
