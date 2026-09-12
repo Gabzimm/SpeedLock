@@ -247,4 +247,10 @@ class TapGestureRecognizerCompat extends GestureRecognizer {
 
   @override
   void handleEvent(PointerEvent event) {}
+
+  @override
+  void acceptGesture(int pointer) {}
+
+  @override
+  void rejectGesture(int pointer) {}
 }
