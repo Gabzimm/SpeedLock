@@ -1,0 +1,27 @@
+workflows:
+  android-apk:
+    name: SpeedLock - APK de teste
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+    scripts:
+      - name: Gerar pastas nativas (android/ios)
+        script: flutter create . --project-name speedlock --org com.speedlock
+      - name: Subir versão do Android SDK (33 é baixa demais para o Bluetooth)
+        script: |
+          # Tenta os dois formatos possíveis do ficheiro (Kotlin DSL ou Groovy),
+          # conforme a versão do Flutter usada gera um ou outro.
+          sed -i '' 's/compileSdk = flutter.compileSdkVersion/compileSdk = 36/' android/app/build.gradle.kts 2>/dev/null || true
+          sed -i '' 's/compileSdk flutter.compileSdkVersion/compileSdk 36/' android/app/build.gradle 2>/dev/null || true
+          sed -i '' 's/targetSdk = flutter.targetSdkVersion/targetSdk = 36/' android/app/build.gradle.kts 2>/dev/null || true
+          sed -i '' 's/targetSdk flutter.targetSdkVersion/targetSdk 36/' android/app/build.gradle 2>/dev/null || true
+          grep -H "compileSdk\|targetSdk" android/app/build.gradle.kts android/app/build.gradle 2>/dev/null || true
+      - name: Instalar dependências
+        script: flutter pub get
+      - name: Gerar ícone da app a partir do logótipo real
+        script: dart run flutter_launcher_icons
+      - name: Compilar APK (release)
+        script: flutter build apk --release
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
